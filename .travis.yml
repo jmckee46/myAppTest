@@ -30,6 +30,9 @@ install:
   - virtualenv  --no-site-packages  -p python3.7 certbot-env
   - source certbot-env/bin/activate
   - go get -u github.com/jmckee46/deployer
+  - echo "artifacts path = $DE_ARTIFACTS_PATH"
+  - go run $GOPATH/src/github.com/jmckee46/deployer/travis-ci-install/main.go
+  - ls -al
 before_script:
   # - source certbot-env/bin/activate && tls/manage-files
   # - tls/manage-files
@@ -51,11 +54,11 @@ env:
     - AWS_REGION=us-west-2
     - AWS_DEFAULT_REGION=$AWS_REGION
     # the following ARTIFACTS_* environment variables are out of sort order due to dependencies on AWS_* environment variables.
-    # - ARTIFACTS_BUCKET=deployer.global
-    # - ARTIFACTS_KEY=$AWS_ACCESS_KEY_ID
-    # - ARTIFACTS_PATH=artifacts
-    # - ARTIFACTS_REGION=$AWS_REGION
-    # - ARTIFACTS_SECRET=$AWS_SECRET_ACCESS_KEY
+    - ARTIFACTS_BUCKET=deployer.global
+    - ARTIFACTS_KEY=$AWS_ACCESS_KEY_ID
+    - ARTIFACTS_PATH=artifacts
+    - ARTIFACTS_REGION=$AWS_REGION
+    - ARTIFACTS_SECRET=$AWS_SECRET_ACCESS_KEY
     - PYTHONWARNINGS="ignore"
     # below are the old travis-ci/export-env-vars
     - DE_DOMAIN=myAppTest.com
